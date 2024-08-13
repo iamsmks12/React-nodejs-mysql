@@ -12,9 +12,14 @@ function Register() {
       await axios.post('http://localhost:5000/api/auth/register', { username, password });
       alert('Registration successful');
     } catch (error) {
-      alert('Registration failed');
-    }
-  };
+			if (error.response.data.errorResponse.errmsg.includes('duplicate'))
+				{
+					alert('Username already used for registration');	
+				}
+			else {
+				alert('Registration failed');
+			};
+  }};
 
   return (
     <form onSubmit={handleSubmit}>

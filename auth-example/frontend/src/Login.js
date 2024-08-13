@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import Register from './Register';
 import Dashboard from './Dashboard';
@@ -15,6 +16,9 @@ function Login({ handleLogin }) {
       const response = await axios.post('http://localhost:5000/api/auth/login', { username, password });
 	  if (response.status >= 200 && response.status < 300) {
 		  localStorage.setItem('token', response.data.token);
+		  localStorage.setItem('myName', response.data.user.username);
+		  // Cookies.set('token', response.data.token);
+		  // Cookies.set('cUsername', response.data.user.username);
 		  alert('Login successful', response.data.user.username);
 		  handleLogin(response.data.user.username); // Pass username to parent component
 		  console.log(response);
